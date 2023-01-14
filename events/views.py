@@ -1,5 +1,8 @@
 from datetime import datetime
-
+import base64
+import json
+from django.core.exceptions import ValidationError
+from rest_framework_simplejwt.backends import TokenBackend
 from django.shortcuts import get_object_or_404
 from rest_framework import status,permissions
 from rest_framework.generics import ListAPIView
@@ -35,13 +38,13 @@ class EventsView(ListAPIView):
         # включая теги м2м из текстовой строки
         # через точку с запятой
 
-        # DONE
+        request.data['user_id'] = request.user.id
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             tags_text_to_db(request.data.get('tagM2M'))
 
-        return Response(200)
+        return Response(serializer.data)  # ??
 
 
 class SingleEventView(APIView):
