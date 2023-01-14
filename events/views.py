@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.shortcuts import get_object_or_404
-from rest_framework import status
+from rest_framework import status,permissions
 from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
 from .serializers import Tag, EventSerializer, EventWithoutDescriptionsSerializer
@@ -9,12 +9,14 @@ from rest_framework.response import Response
 from .add_tags import tags_text_to_db
 from .models import Events
 class TagsView(APIView):
-    def get(self):
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request):
         tags = [tag.tag_name for tag in Tag.objects.all()]
         return Response(tags)
 
 
 class EventsView(ListAPIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get(self, request):
         # Получить список всех событий за период.
         # Во входящих фильтрах: от(iso datetime string), до(iso datetime string),
@@ -43,6 +45,7 @@ class EventsView(ListAPIView):
 
 
 class SingleEventView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get(self, request, pk):
         # Получить детальное описание события
         # - все атрибуты модели, включая м2м
