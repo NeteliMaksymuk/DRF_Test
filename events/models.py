@@ -19,4 +19,5 @@ class Events(models.Model):
     event_type = models.TextField()  # ??
     descriptions = models.TextField()
     category = models.CharField(max_length=2, choices=EventCategory.choices, default=EventCategory.INFO)
-    tagM2M = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    tagM2M = models.TextField()
+

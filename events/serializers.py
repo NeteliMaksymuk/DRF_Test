@@ -14,3 +14,11 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Events
         fields = '__all__'
+
+
+
+class EventWithoutDescriptionsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Events
+        fields = ['created_at', 'user_id', 'event_type', 'category', 'tagM2M' ]
