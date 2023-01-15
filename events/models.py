@@ -14,10 +14,14 @@ class Events(models.Model):
         ATTENTION = "At", _("Attention")
         ALARM = "Al", _("Alarm")
 
-    created_at = models.DateTimeField(default=datetime.now, null=True, blank=True, editable=False)
+    created_at = models.DateTimeField(default=datetime.now,
+                                      null=True, blank=True,
+                                      editable=False)
     user_id = models.IntegerField()
     event_type = models.TextField()  # ??
     descriptions = models.TextField()
-    category = models.CharField(max_length=2, choices=EventCategory.choices, default=EventCategory.INFO)
+    category = models.CharField(max_length=2,
+                                choices=EventCategory.choices,
+                                default=EventCategory.INFO)
     tagM2M = models.TextField()
 
